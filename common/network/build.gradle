@@ -1,0 +1,9 @@
+apply from: "$rootDir/common-kotlin-library.gradle"
+
+dependencies {
+
+    implementation Libraries.retrofit
+    implementation Libraries.moshiConverter
+    implementation Libraries.okHttp
+    implementation Libraries.loggingInterceptor
+}

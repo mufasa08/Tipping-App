@@ -1,2 +1,8 @@
-include ':app'
+include(
+        ":app",
+        ":common:presentation",
+        ":common:network",
+        ":common:cache",
+        ":tipjar"
+)
 rootProject.name = "TipJar"
