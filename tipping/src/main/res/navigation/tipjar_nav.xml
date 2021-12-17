@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tipjar_nav_graph"
+    app:startDestination="@id/tip_jar_fragment">
+
+    <fragment
+        android:id="@+id/tip_jar_fragment"
+        android:name="com.example.tipping.view.TipJarFragment"
+        android:label="TipJarFragment">
+
+        <action
+            android:id="@+id/action_tipjar_to_receipt_list"
+            app:destination="@id/receipt_list_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/receipt_list_fragment"
+        android:name="com.example.tipping.view.ReceiptListFragment"
+        android:label="ReceiptListFragment">
+        <argument
+            android:name="root_directory"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

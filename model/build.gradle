@@ -1,0 +1,8 @@
+apply from: "$rootDir/common-android-library.gradle"
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+
+    //Util
+    implementation(Utils.threeTenAbp)
+}

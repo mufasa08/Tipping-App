@@ -37,25 +37,30 @@ android {
 
 dependencies {
     implementation project(":common:cache")
-    implementation project(":common:network")
-    implementation project(":tipjar")
+    implementation project(':tipping')
 
-    implementation Libraries.kotlin
+    implementation Kotlin.stdlibJdk7
 
 
-    implementation SupportLibraries.design
-    implementation SupportLibraries.cardview
-    implementation SupportLibraries.appcompat
-    implementation SupportLibraries.recyclerview
+    // UI
+    implementation AndroidX.appCompat
+    implementation Google.material
 
-    implementation Libraries.koinAndroid
+    // DI
+    implementation DI.koinAndroid
 
-    implementation Libraries.moshiConverter
-
-    debugImplementation Libraries.leakCanaryAndroid
+    // Navigation
+    implementation AndroidX.navigationFragment
+    implementation AndroidX.navigationUI
 
     //DB
-    implementation Libraries.roomRuntime
-    implementation Libraries.roomKtx
-    kapt Libraries.roomCompiler because("Room annotations")
+    implementation AndroidX.roomRuntime
+    implementation AndroidX.roomKtx
+    kapt AndroidX.roomCompiler because("Room annotations")
+
+    // DEBUG
+    debugImplementation Utils.flipper
+    debugImplementation Utils.flipperNetworkPlugin
+    debugImplementation Utils.flipperFrescoPlugin
+    debugImplementation Utils.soLoader
 }
