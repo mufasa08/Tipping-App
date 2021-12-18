@@ -1,7 +1,7 @@
-import org.threeten.bp.LocalDate
+import java.util.Date
 
 data class TipHistory(
-    val paymentDate: LocalDate,
+    val paymentDate: Date,
     val payment: Double,
     val tipAmount: Double,
     val receiptImageUriPath: String?,

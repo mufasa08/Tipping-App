@@ -1,0 +1,28 @@
+apply from: "$rootDir/common-android-library.gradle"
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
+dependencies {
+    implementation project(":model")
+    // Kotlin lang
+    implementation AndroidX.coreKtx
+    implementation Kotlin.stdlibJdk7
+    implementation Kotlin.coroutines
+
+    // DI
+    implementation DI.koinAndroid
+
+    implementation AndroidX.roomRuntime
+    implementation AndroidX.roomKtx
+    implementation AndroidX.roomCompiler
+
+
+    // Unit testing
+    // Tests
+    testImplementation Testing.junit
+    testImplementation Testing.truth
+    testImplementation Testing.mockK
+    testImplementation Testing.lifecycleTesting
+    testImplementation Testing.coroutinesTest
+    testImplementation Network.moshiConverter
+}

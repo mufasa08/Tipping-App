@@ -4,9 +4,9 @@ import TipHistory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mdualeh.presentation.event.Event
-import com.mdualeh.presentation.event.postEvent
-import com.mdualeh.presentation.util.combineLatest
+import com.example.presentation.event.Event
+import com.example.presentation.event.postEvent
+import com.example.presentation.util.combineLatest
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneOffset
 import timber.log.Timber
