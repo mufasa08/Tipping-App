@@ -25,12 +25,14 @@ object Versions {
     const val design = "1.5.0-alpha01"
     const val espresso = "3.4.0"
     const val flipper = "0.117.0"
+    const val fresco = "2.6.0"
     const val glide = "4.12.0"
     const val gradle = "4.2.1"
+    const val groupie = "2.10.0"
     const val junit = "1.1.3"
     const val koin = "3.1.2"
-    const val kotlin = "1.6.0"
-    const val lifecycle = "2.4.0-alpha02"
+    const val kotlin = "1.5.31"
+    const val lifecycle = "2.4.0"
     const val lifecycleTesting = "2.1.0"
     const val materialComponents = "1.4.0"
     const val minSdk = 21
@@ -40,12 +42,12 @@ object Versions {
     const val okhttp = "4.9.1"
     const val retrofit = "2.9.0"
     const val roboelectric = "4.6.1"
-    const val room = "2.4.0"
-    const val roomCompiler = "2.4.0"
+    const val room = "2.3.0"
+    const val roomCompiler = "2.3.0"
     const val rules = "1.4.0"
     const val runner = "1.4.0"
     const val soLoader = "0.10.1"
-    const val targetSdk = 31
+    const val targetSdk = 30
     const val timber = "4.7.1"
     const val truth = "1.4.0"
     const val windowManager = "1.0.0-alpha09"
@@ -60,8 +62,8 @@ object AndroidX {
         "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
-    const val lifecycleCommonJava8 =
-        "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
+    const val lifecycleCommon =
+        "androidx.lifecycle:lifecycle-common:${Versions.lifecycle}"
     const val lifeCycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val materialComponents =
         "com.google.android.material:material:${Versions.materialComponents}"
@@ -125,6 +127,9 @@ object Testing {
 object UI {
     const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
+    const val groupie = "com.github.lisawray.groupie:groupie:${Versions.groupie}"
+    const val groupieDataBinding = "com.github.lisawray.groupie:groupie-databinding:${Versions.groupie}"
+    const val fresco = "com.facebook.fresco:fresco:${Versions.fresco}"
 }
 
 object Utils {

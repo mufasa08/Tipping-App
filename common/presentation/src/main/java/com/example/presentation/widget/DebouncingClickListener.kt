@@ -1,4 +1,4 @@
-package com.mdualeh.presentation.widget
+package com.example.presentation.widget
 
 import android.os.Handler
 import android.os.Looper

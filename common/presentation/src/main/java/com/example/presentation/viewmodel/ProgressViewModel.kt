@@ -1,4 +1,4 @@
-package com.mdualeh.presentation.viewmodel
+package com.example.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 

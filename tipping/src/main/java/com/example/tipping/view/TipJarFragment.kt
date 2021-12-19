@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.presentation.event.observeEvent
 import com.example.tipping.databinding.FragmentTipjarBinding
 import com.example.tipping.viewmodel.TipJarViewModel
 import com.example.tipping.viewmodel.TipJarViewModelImpl
@@ -25,6 +27,11 @@ class TipJarFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        findNavController().navigate(TipJarFragmentDirections.actionTipjarToReceiptList())
+
+        viewModel.navigateToReceiptList.observeEvent(viewLifecycleOwner) {
+            findNavController().navigate(TipJarFragmentDirections.actionTipjarToReceiptList())
+        }
         return binding.root
     }
 }

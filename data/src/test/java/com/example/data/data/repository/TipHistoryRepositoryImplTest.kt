@@ -3,10 +3,8 @@
 package com.example.data.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.data.daoHistoryItem
 import com.example.data.daoHistoryItemTwo
-import com.example.data.db.AppDatabase
 import com.example.data.db.dao.TipHistoryDao
 import com.example.data.repository.TipHistoryRepositoryImpl
 import com.example.data.tipHistoryItem
@@ -18,7 +16,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 class TipHistoryRepositoryImplTest {
 
@@ -44,7 +41,12 @@ class TipHistoryRepositoryImplTest {
         coEvery { tipHistoryDao.insertAll(any()) }.returns(Unit)
 
         // when
-        repository.addTipHistory(tipHistory)
+        repository.addTipHistory(
+            tipHistory.paymentDate,
+            tipHistory.payment,
+            tipHistory.tipAmount,
+            tipHistory.receiptImageUriPath
+        )
 
         // then
         coVerify { tipHistoryDao.insertAll(any()) }

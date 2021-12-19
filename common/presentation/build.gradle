@@ -12,4 +12,6 @@ dependencies {
     implementation AndroidX.constraintLayout
     implementation AndroidX.coreKtx
     implementation AndroidX.materialComponents
+    implementation(AndroidX.lifecycleCommon)
+    implementation UI.fresco
 }

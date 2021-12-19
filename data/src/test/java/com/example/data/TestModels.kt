@@ -22,6 +22,7 @@ val daoHistoryItemTwo = TipHistoryEntity(
 )
 
 val tipHistoryItem = TipHistory(
+    id = 1,
     paymentDate = now,
     payment = 10.00,
     tipAmount = 2.00,

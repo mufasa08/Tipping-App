@@ -1,6 +1,7 @@
 package com.example.tipjar
 
 import android.app.Application
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.flipper.android.AndroidFlipperClient
 import com.facebook.flipper.android.utils.FlipperUtils
 import com.facebook.flipper.plugins.databases.DatabasesFlipperPlugin
@@ -35,6 +36,7 @@ class DebugApp : Application() {
             client.addPlugin(SharedPreferencesFlipperPlugin(this))
             client.start()
         }
+        Fresco.initialize(this)
         setupKoin()
     }
 

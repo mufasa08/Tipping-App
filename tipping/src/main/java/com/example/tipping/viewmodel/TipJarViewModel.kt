@@ -1,15 +1,16 @@
 package com.example.tipping.viewmodel
 
-import TipHistory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.data.repository.TipHistoryRepository
 import com.example.presentation.event.Event
 import com.example.presentation.event.postEvent
 import com.example.presentation.util.combineLatest
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneOffset
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.Date
 
 interface TipJarViewModel {
     val savePaymentButtonEnabled: LiveData<Boolean>
@@ -19,8 +20,8 @@ interface TipJarViewModel {
     val receiptPhotoIsChecked: MutableLiveData<Boolean>
     val navigateToCamera: MutableLiveData<Event<Unit>>
     val navigateToReceiptList: MutableLiveData<Event<Unit>>
-    val totalTip: LiveData<Double>
-    val totalTipPerPerson: LiveData<Double>
+    val totalTip: MutableLiveData<Double>
+    val totalTipPerPerson: MutableLiveData<Double>
 
     fun historyButtonClicked()
     fun incrementPeople()
@@ -30,7 +31,7 @@ interface TipJarViewModel {
 }
 
 class TipJarViewModelImpl(
-    // private val useCase: useCase
+    private val tipHistoryRepository: TipHistoryRepository
 ) : TipJarViewModel, ViewModel() {
 
     override val paymentAmount = MutableLiveData<String>("")
@@ -46,15 +47,17 @@ class TipJarViewModelImpl(
 
     override val navigateToCamera = MutableLiveData<Event<Unit>>()
     override val navigateToReceiptList = MutableLiveData<Event<Unit>>()
-    override val totalTip = combineLatest(paymentAmount, tipPercentage) {
-        amt, pct ->
-        calculateTotalTip(amt, pct)
-    }
+    override val totalTip =
+        combineLatest(paymentAmount, tipPercentage) { amt, pct ->
+            if (!amt.isNullOrEmpty() && !pct.isNullOrEmpty()) {
+                calculateTotalTip(amt, pct)
+            } else 0.00
+        }
 
     private fun calculateTotalTip(amt: String?, pct: String?): Double {
         return try {
             if (amt != null && pct != null) {
-                (amt.toDouble() * Integer.parseInt(pct) / 100)
+                (amt.toDouble() * pct.toInt() / 100)
             } else {
                 0.00
             }
@@ -99,7 +102,7 @@ class TipJarViewModelImpl(
         if (shouldTakePhoto) {
             navigateToCamera.postEvent(Unit)
         } else {
-            navigateToReceiptList.postEvent(Unit)
+            savePaymentToDB(null)
         }
     }
 
@@ -111,17 +114,23 @@ class TipJarViewModelImpl(
 
     private fun savePaymentToDB(imagePath: String?) {
         val paymentAmount = paymentAmount.value
-        val tipAmount = totalTip.value
+        val tipAmount = 10.00
+        // TODO resolve this issue with tipAmount and remove hardcode
         if (paymentAmount != null && tipAmount != null) {
-            val tipHistory = TipHistory(
-                paymentDate = LocalDate.now(ZoneOffset.UTC),
-                payment = paymentAmount.toDouble(),
-                tipAmount = tipAmount,
-                receiptImageUriPath = imagePath,
-            )
+            viewModelScope.launch {
+                try {
+                    tipHistoryRepository.addTipHistory(
+                        paymentDate = Date(),
+                        payment = paymentAmount.toDouble(),
+                        tipAmount = tipAmount,
+                        receiptImageUriPath = imagePath
+                    )
+                    navigateToReceiptList.postEvent(Unit)
+                } catch (e: Throwable) {
+                    Timber.w(e)
+                }
+            }
         }
-        // TODO save to DB and on completion, navigate to history page
-        // navigateToReceiptList.postEvent(Unit)
     }
 
     companion object {

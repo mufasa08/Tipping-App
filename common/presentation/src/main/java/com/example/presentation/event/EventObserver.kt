@@ -1,4 +1,4 @@
-package com.mdualeh.presentation.event
+package com.example.presentation.event
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

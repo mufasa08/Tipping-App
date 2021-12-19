@@ -1,4 +1,4 @@
-package com.mdualeh.presentation
+package com.example.presentation
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

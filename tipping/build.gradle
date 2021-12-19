@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -21,6 +22,7 @@ dependencies {
     implementation project(":common:cache")
     implementation project(":model")
     implementation project(":common:presentation")
+    implementation project(":data")
 
     // Kotlin lang
     implementation AndroidX.coreKtx
@@ -48,6 +50,11 @@ dependencies {
     // Glide
     implementation UI.glide
     kapt UI.glideCompiler
+
+    // UI
+    implementation UI.groupie
+    implementation UI.groupieDataBinding
+    implementation UI.fresco
 
     // Logging
     implementation Utils.timber

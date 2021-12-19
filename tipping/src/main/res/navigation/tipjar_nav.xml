@@ -11,17 +11,15 @@
 
         <action
             android:id="@+id/action_tipjar_to_receipt_list"
-            app:destination="@id/receipt_list_fragment" />
+            app:destination="@id/tip_history_list_fragment" />
+
 
     </fragment>
 
     <fragment
-        android:id="@+id/receipt_list_fragment"
-        android:name="com.example.tipping.view.ReceiptListFragment"
-        android:label="ReceiptListFragment">
-        <argument
-            android:name="root_directory"
-            app:argType="string" />
+        android:id="@+id/tip_history_list_fragment"
+        android:name="com.example.tipping.view.TipHistoryListFragment"
+        android:label="TipHistoryListFragment">
     </fragment>
 
 </navigation>

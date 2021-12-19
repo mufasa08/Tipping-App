@@ -62,6 +62,7 @@ dependencies {
     implementation AndroidX.roomKtx
     kapt AndroidX.roomCompiler because("Room annotations")
 
+    implementation UI.fresco
     implementation Utils.timber
     // DEBUG
     debugImplementation Utils.flipper
