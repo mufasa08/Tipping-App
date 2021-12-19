@@ -22,12 +22,13 @@ interface TipJarViewModel {
     val navigateToReceiptList: MutableLiveData<Event<Unit>>
     val totalTip: MutableLiveData<Double>
     val totalTipPerPerson: MutableLiveData<Double>
+    val imagePath: MutableLiveData<String>
 
     fun historyButtonClicked()
     fun incrementPeople()
     fun decrementPeople()
     fun savePaymentClicked()
-    fun onReturnFromCamera(success: Boolean, imagePath: String)
+    fun onReturnFromCamera(success: Boolean)
 }
 
 class TipJarViewModelImpl(
@@ -36,6 +37,7 @@ class TipJarViewModelImpl(
 
     override val paymentAmount = MutableLiveData<String>("")
     override val tipPercentage = MutableLiveData<String>("")
+    override val imagePath = MutableLiveData<String>("")
 
     override val receiptPhotoIsChecked = MutableLiveData(false)
     override val savePaymentButtonEnabled =
@@ -106,10 +108,9 @@ class TipJarViewModelImpl(
         }
     }
 
-    override fun onReturnFromCamera(success: Boolean, imagePath: String) {
-        if (success) {
-            savePaymentToDB(imagePath)
-        }
+    override fun onReturnFromCamera(success: Boolean) {
+        val imagePath = if(success) imagePath.value else null
+        savePaymentToDB(imagePath)
     }
 
     private fun savePaymentToDB(imagePath: String?) {

@@ -70,7 +70,7 @@
             app:layout_constraintStart_toEndOf="@id/paymentAmount"
             tools:text="$10" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/receiptPhoto"
             android:layout_width="53dp"
             android:layout_height="53dp"
@@ -78,11 +78,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            fresco:actualImageScaleType="fitCenter"
-            fresco:failureImage="@{@drawable/ic_nopic}"
-            fresco:failureImageScaleType='@{"centerInside"}'
-            fresco:imageUrl="@{viewModel.receiptUrl}" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -50,6 +50,7 @@ dependencies {
     // Glide
     implementation UI.glide
     kapt UI.glideCompiler
+    implementation UI.glideTransformations
 
     // UI
     implementation UI.groupie

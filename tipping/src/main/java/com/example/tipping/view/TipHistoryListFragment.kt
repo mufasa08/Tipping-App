@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.presentation.event.observeEvent
 import com.example.presentation.fragment.autoCleared
 import com.example.tipping.R
@@ -24,6 +26,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.databinding.BindableItem
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 
@@ -62,13 +65,18 @@ class TipHistoryListFragment : Fragment() {
     private fun updateList(historyItems: List<TipHistory>?) {
         if (historyItems != null) {
             val items = historyItems.map { historyItem ->
-                TipHistoryItem(historyItem, ItemViewModel(requireActivity(), viewLifecycleOwner))
+                TipHistoryItem(
+                    requireContext(),
+                    historyItem,
+                    ItemViewModel(requireActivity(), viewLifecycleOwner)
+                )
             }
             listAdapter.update(items)
         }
     }
 
     class TipHistoryItem(
+        private val context: Context,
         private val tipHistory: TipHistory,
         private val itemViewModel: ItemViewModel,
     ) : BindableItem<TipsHistoryListItemBinding>() {
@@ -87,6 +95,22 @@ class TipHistoryListFragment : Fragment() {
         override fun bind(binding: TipsHistoryListItemBinding, position: Int) {
             itemViewModel.tipHistory = tipHistory
             binding.viewModel = itemViewModel
+
+            Glide
+                .with(context)
+                .load(tipHistory.receiptImageUriPath)
+                .apply(
+                    RequestOptions.bitmapTransform(
+                        RoundedCornersTransformation(
+                            12,
+                            0,
+                            RoundedCornersTransformation.CornerType.ALL
+                        )
+                    )
+                )
+                .centerCrop()
+                .placeholder(R.drawable.ic_nopic)
+                .into(binding.receiptPhoto)
         }
     }
 
@@ -124,9 +148,16 @@ class TipHistoryListFragment : Fragment() {
                 false
             )
             binding.lifecycleOwner = lifecycleOwner
-            tipHistory.receiptImageUriPath?.let { binding.receiptPhoto.setImageURI(it) }
+            Glide
+                .with(context)
+                .load(tipHistory.receiptImageUriPath)
+                .centerCrop()
+                .placeholder(R.drawable.ic_nopic)
+                .into(binding.receiptPhoto)
+
             binding.paymentAmount.text = "\$${tipHistory.payment}"
-            binding.paymentDate.text = SimpleDateFormat("yyyy MMMM d").format(tipHistory.paymentDate)
+            binding.paymentDate.text =
+                SimpleDateFormat("yyyy MMMM d").format(tipHistory.paymentDate)
             binding.tipAmount.text = "Tip: \$${tipHistory.tipAmount}"
 
             dialog.setView(binding.root)

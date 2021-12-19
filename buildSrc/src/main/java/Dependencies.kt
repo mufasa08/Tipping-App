@@ -27,6 +27,7 @@ object Versions {
     const val flipper = "0.117.0"
     const val fresco = "2.6.0"
     const val glide = "4.12.0"
+    const val glideTransformations = "4.3.0"
     const val gradle = "4.2.1"
     const val groupie = "2.10.0"
     const val junit = "1.1.3"
@@ -127,6 +128,7 @@ object Testing {
 object UI {
     const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
+    const val glideTransformations = "jp.wasabeef:glide-transformations:${Versions.glideTransformations}"
     const val groupie = "com.github.lisawray.groupie:groupie:${Versions.groupie}"
     const val groupieDataBinding = "com.github.lisawray.groupie:groupie-databinding:${Versions.groupie}"
     const val fresco = "com.facebook.fresco:fresco:${Versions.fresco}"
