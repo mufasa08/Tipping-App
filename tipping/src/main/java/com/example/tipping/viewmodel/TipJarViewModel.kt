@@ -1,9 +1,6 @@
 package com.example.tipping.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.data.repository.TipHistoryRepository
 import com.example.presentation.event.Event
 import com.example.presentation.event.postEvent
@@ -20,8 +17,8 @@ interface TipJarViewModel {
     val receiptPhotoIsChecked: MutableLiveData<Boolean>
     val navigateToCamera: MutableLiveData<Event<Unit>>
     val navigateToReceiptList: MutableLiveData<Event<Unit>>
-    val totalTip: MutableLiveData<Double>
-    val totalTipPerPerson: MutableLiveData<Double>
+    val totalTip: MutableLiveData<String>
+    val totalTipPerPerson: MutableLiveData<String>
     val imagePath: MutableLiveData<String>
 
     fun historyButtonClicked()
@@ -29,15 +26,16 @@ interface TipJarViewModel {
     fun decrementPeople()
     fun savePaymentClicked()
     fun onReturnFromCamera(success: Boolean)
+    fun calculateTips()
 }
 
 class TipJarViewModelImpl(
     private val tipHistoryRepository: TipHistoryRepository
-) : TipJarViewModel, ViewModel() {
+) : TipJarViewModel, ViewModel(), LifecycleObserver {
 
-    override val paymentAmount = MutableLiveData<String>("")
-    override val tipPercentage = MutableLiveData<String>("")
-    override val imagePath = MutableLiveData<String>("")
+    override val paymentAmount = MutableLiveData("")
+    override val tipPercentage = MutableLiveData("")
+    override val imagePath = MutableLiveData("")
 
     override val receiptPhotoIsChecked = MutableLiveData(false)
     override val savePaymentButtonEnabled =
@@ -45,16 +43,12 @@ class TipJarViewModelImpl(
             !amt.isNullOrEmpty() && !percent.isNullOrEmpty()
         }
 
-    override val peopleCount = MutableLiveData<Int>(MINIUMUM_PERSON_COUNT)
+    override val peopleCount = MutableLiveData(MINIUMUM_PERSON_COUNT)
 
     override val navigateToCamera = MutableLiveData<Event<Unit>>()
     override val navigateToReceiptList = MutableLiveData<Event<Unit>>()
-    override val totalTip =
-        combineLatest(paymentAmount, tipPercentage) { amt, pct ->
-            if (!amt.isNullOrEmpty() && !pct.isNullOrEmpty()) {
-                calculateTotalTip(amt, pct)
-            } else 0.00
-        }
+    override val totalTip = MutableLiveData<String>("")
+    override val totalTipPerPerson = MutableLiveData<String>("")
 
     private fun calculateTotalTip(amt: String?, pct: String?): Double {
         return try {
@@ -69,15 +63,8 @@ class TipJarViewModelImpl(
         }
     }
 
-    private fun calculateTipPerPerson(tip: Double, peopleCount: Int): Double {
-        return tip / peopleCount
-    }
-
-    override val totalTipPerPerson = combineLatest(totalTip, peopleCount) {
-        tip, people ->
-        if (people != null && tip != null) {
-            calculateTipPerPerson(tip, people)
-        } else 0.00
+    private fun calculateTipPerPerson(tip: String?, peopleCount: Int): Double {
+        return tip?.toDouble()?.div(peopleCount) ?: 0.00
     }
 
     override fun historyButtonClicked() {
@@ -109,15 +96,24 @@ class TipJarViewModelImpl(
     }
 
     override fun onReturnFromCamera(success: Boolean) {
-        val imagePath = if(success) imagePath.value else null
+        val imagePath = if (success) imagePath.value else null
         savePaymentToDB(imagePath)
+    }
+
+    override fun calculateTips() {
+        try {
+            totalTip.value = calculateTotalTip(paymentAmount.value, tipPercentage.value).toString()
+            totalTipPerPerson.value =
+                calculateTipPerPerson(totalTip.value, peopleCount.value ?: 1).toString()
+        } catch (ex: NumberFormatException) {
+            Timber.e(ex)
+        }
     }
 
     private fun savePaymentToDB(imagePath: String?) {
         val paymentAmount = paymentAmount.value
-        val tipAmount = 10.00
-        // TODO resolve this issue with tipAmount and remove hardcode
-        if (paymentAmount != null && tipAmount != null) {
+        val tipAmount = totalTip.value?.toDouble() ?: 0.00
+        if (paymentAmount != null) {
             viewModelScope.launch {
                 try {
                     tipHistoryRepository.addTipHistory(

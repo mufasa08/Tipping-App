@@ -243,6 +243,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="24dp"
+                    android:text="@{viewModel.totalTip}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tipContainer" />
 
@@ -266,6 +267,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="24dp"
                     android:textSize="24sp"
+                    android:text="@{viewModel.totalTipPerPerson}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/totalTipAmount" />
 
@@ -281,6 +283,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/perPersonTitle" />
 
+                <Button
+                    android:id="@+id/savePayment"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="24dp"
+                    android:backgroundTint="@color/button_color"
+                    android:enabled="@{viewModel.savePaymentButtonEnabled}"
+                    android:minHeight="48dp"
+                    android:text="@string/save_payment"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:onClick="@{() -> viewModel.savePaymentClicked()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/receiptPhotoCheckbox"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
@@ -294,21 +313,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <Button
-                android:id="@+id/savePayment"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="24dp"
-                android:backgroundTint="@color/button_color"
-                android:enabled="@{viewModel.savePaymentButtonEnabled}"
-                android:minHeight="48dp"
-                android:text="@string/save_payment"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                app:onClick="@{() -> viewModel.savePaymentClicked()}"/>
 
         </FrameLayout>
 

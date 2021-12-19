@@ -1,15 +1,11 @@
 package com.example.tipping.view
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
-import android.app.Instrumentation
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,13 +44,27 @@ class TipJarFragment : Fragment() {
         viewModel.navigateToReceiptList.observeEvent(viewLifecycleOwner) {
             findNavController().navigate(TipJarFragmentDirections.actionTipjarToReceiptList())
         }
-        viewModel.navigateToCamera.observeEvent(viewLifecycleOwner){
+        viewModel.navigateToCamera.observeEvent(viewLifecycleOwner) {
             dispatchTakePictureIntent()
         }
+
+        // TODO combine the below into one using mediator live data
+        viewModel.paymentAmount.observe(viewLifecycleOwner) {
+            viewModel.calculateTips()
+        }
+
+        viewModel.tipPercentage.observe(viewLifecycleOwner) {
+            viewModel.calculateTips()
+        }
+
+        viewModel.peopleCount.observe(viewLifecycleOwner) {
+            viewModel.calculateTips()
+        }
+
         return binding.root
     }
 
-    lateinit var currentPhotoPath: String
+    private lateinit var currentPhotoPath: String
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -104,5 +114,4 @@ class TipJarFragment : Fragment() {
             }
         }
     }
-
 }
