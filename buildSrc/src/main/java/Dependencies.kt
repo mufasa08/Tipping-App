@@ -12,23 +12,24 @@ object Releases {
 }
 
 object Versions {
+    const val archCore = "2.1.0"
     const val appcompat = "1.4.0-alpha03"
     const val camerax = "1.1.0-alpha07"
     const val cameraView = "1.0.0-alpha27"
     const val chucker = "3.5.0"
-    const val compileSdk = 30
+    const val compileSdk = 31
     const val constraintLayout = "2.0.4"
     const val coreKtx = "1.6.0"
     const val coreTest = "1.4.0"
     const val coroutines = "1.5.1"
     const val design = "1.5.0-alpha01"
     const val espresso = "3.4.0"
-    const val flipper = "0.98.0"
+    const val flipper = "0.117.0"
     const val glide = "4.12.0"
     const val gradle = "4.2.1"
     const val junit = "1.1.3"
     const val koin = "3.1.2"
-    const val kotlin = "1.5.21"
+    const val kotlin = "1.6.0"
     const val lifecycle = "2.4.0-alpha02"
     const val lifecycleTesting = "2.1.0"
     const val materialComponents = "1.4.0"
@@ -39,11 +40,12 @@ object Versions {
     const val okhttp = "4.9.1"
     const val retrofit = "2.9.0"
     const val roboelectric = "4.6.1"
-    const val room = "2.2.6"
+    const val room = "2.4.0"
+    const val roomCompiler = "2.4.0"
     const val rules = "1.4.0"
     const val runner = "1.4.0"
     const val soLoader = "0.10.1"
-    const val targetSdk = 30
+    const val targetSdk = 31
     const val timber = "4.7.1"
     const val truth = "1.4.0"
     const val windowManager = "1.0.0-alpha09"
@@ -73,7 +75,7 @@ object AndroidX {
     // DB
     const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
     const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
-    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.roomCompiler}"
 
     const val windowManager = "androidx.window:window:${Versions.windowManager}"
 }
@@ -106,6 +108,7 @@ object Network {
 }
 
 object Testing {
+    const val archCore = "androidx.arch.core:core-testing:${Versions.archCore}"
     const val junit = "androidx.test.ext:junit:${Versions.junit}"
     const val truth = "androidx.test.ext:truth:${Versions.truth}"
     const val mockK = "io.mockk:mockk:${Versions.mockk}"

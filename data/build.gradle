@@ -2,13 +2,9 @@ apply from: "$rootDir/common-android-library.gradle"
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
-android {
-    defaultConfig {
-        testInstrumentationRunner = 'androidx.test.runner.AndroidJUnitRunner'
-    }
-}
 dependencies {
     implementation project(":model")
+    implementation project(":data:db")
     // Kotlin lang
     implementation AndroidX.coreKtx
     implementation Kotlin.stdlibJdk7
@@ -17,15 +13,17 @@ dependencies {
     // DI
     implementation DI.koinAndroid
 
-    implementation AndroidX.roomRuntime
+    api AndroidX.roomRuntime
     implementation AndroidX.roomKtx
     kapt AndroidX.roomCompiler because("Room annotations")
-
+    implementation AndroidX.lifecycleLiveData
 
     // Unit testing
     // Tests
-    androidTestImplementation(Testing.archCore)
-    androidTestImplementation(Testing.junit)
-    androidTestImplementation(Testing.runner)
-    androidTestImplementation(Testing.truth)
+    testImplementation Testing.junit
+    testImplementation Testing.truth
+    testImplementation Testing.mockK
+    testImplementation Testing.lifecycleTesting
+    testImplementation Testing.coroutinesTest
+    testImplementation Network.moshiConverter
 }

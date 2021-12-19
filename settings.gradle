@@ -4,6 +4,7 @@ include(
         ":common:cache",
         ":model",
         ":data",
+        ":data:db",
         ':tipping'
 )
 rootProject.name = "TipJar"

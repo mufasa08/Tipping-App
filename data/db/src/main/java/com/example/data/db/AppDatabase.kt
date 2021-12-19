@@ -1,4 +1,4 @@
-package com.example.db
+package com.example.data.db
 
 import android.content.Context
 import androidx.room.Database
@@ -6,15 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.withTransaction
-import com.example.db.converters.Converters
-import com.example.db.dao.TipHistoryDao
-import com.example.db.entity.TipHistoryEntity
+import com.example.data.db.converters.Converters
+import com.example.data.db.dao.TipHistoryDao
+import com.example.data.db.entity.TipHistoryEntity
 
 @Database(
     entities = [
         TipHistoryEntity::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -22,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         fun createAppDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(context, AppDatabase::class.java, "com.example.tipjar.db")
+            return Room.databaseBuilder(context, AppDatabase::class.java, "tipjar.db")
                 .fallbackToDestructiveMigration()
                 .build()
         }
