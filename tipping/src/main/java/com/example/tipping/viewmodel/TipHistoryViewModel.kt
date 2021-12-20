@@ -5,13 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.repository.TipHistoryRepository
-import com.example.presentation.event.Event
-import com.example.presentation.event.postEvent
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 interface TipHistoryViewModel {
-    val tipHistoryLoaded: MutableLiveData<Event<List<TipHistory>>>
+    val tipHistoryList: MutableLiveData<List<TipHistory>>
 
     fun getTipHistory()
 }
@@ -19,7 +17,7 @@ interface TipHistoryViewModel {
 class TipHistoryViewModelImpl(
     private val tipHistoryRepository: TipHistoryRepository
 ) : TipHistoryViewModel, ViewModel() {
-    override val tipHistoryLoaded = MutableLiveData< Event<List<TipHistory>>>()
+    override val tipHistoryList = MutableLiveData<List<TipHistory>>()
 
     init {
         getTipHistory()
@@ -28,7 +26,7 @@ class TipHistoryViewModelImpl(
         viewModelScope.launch {
             try {
                 val list = tipHistoryRepository.getTipHistoryList()
-                tipHistoryLoaded.postEvent(list)
+                tipHistoryList.postValue(list)
             } catch (e: Throwable) {
                 Timber.e(e)
             }

@@ -1,5 +1,6 @@
 package com.example.tipping.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import com.example.data.repository.TipHistoryRepository
 import com.example.presentation.event.Event
@@ -50,7 +51,8 @@ class TipJarViewModelImpl(
     override val totalTip = MutableLiveData<String>("")
     override val totalTipPerPerson = MutableLiveData<String>("")
 
-    private fun calculateTotalTip(amt: String?, pct: String?): Double {
+    @VisibleForTesting
+    fun calculateTotalTip(amt: String?, pct: String?): Double {
         return try {
             if (amt != null && pct != null) {
                 (amt.toDouble() * pct.toInt() / 100)
@@ -63,7 +65,8 @@ class TipJarViewModelImpl(
         }
     }
 
-    private fun calculateTipPerPerson(tip: String?, peopleCount: Int): Double {
+    @VisibleForTesting
+    fun calculateTipPerPerson(tip: String?, peopleCount: Int): Double {
         return tip?.toDouble()?.div(peopleCount) ?: 0.00
     }
 
@@ -110,10 +113,11 @@ class TipJarViewModelImpl(
         }
     }
 
-    private fun savePaymentToDB(imagePath: String?) {
+    @VisibleForTesting
+    fun savePaymentToDB(imagePath: String?) {
         val paymentAmount = paymentAmount.value
-        val tipAmount = totalTip.value?.toDouble() ?: 0.00
         if (paymentAmount != null) {
+            val tipAmount = totalTip.value?.toDouble() ?: 0.00
             viewModelScope.launch {
                 try {
                     tipHistoryRepository.addTipHistory(

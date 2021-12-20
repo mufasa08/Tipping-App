@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.presentation.event.observeEvent
 import com.example.presentation.fragment.autoCleared
 import com.example.tipping.R
 import com.example.tipping.databinding.DialogReceiptPaymentDetailsBinding
@@ -50,7 +49,7 @@ class TipHistoryListFragment : Fragment() {
         listAdapter = GroupieAdapter()
         binding.paymentsHistoryList.adapter = listAdapter
         binding.paymentsHistoryList.addItemDecoration(dividerDecoration)
-        viewModel.tipHistoryLoaded.observeEvent(viewLifecycleOwner) { list ->
+        viewModel.tipHistoryList.observe(viewLifecycleOwner) { list ->
             updateList(list)
         }
         binding.toolbar.apply {

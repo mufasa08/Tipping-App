@@ -66,11 +66,8 @@ dependencies {
     testImplementation Testing.runner
     testImplementation Testing.espresso
     testImplementation Testing.roboelectric
+    testImplementation Testing.lifecycleTesting
+    testImplementation Testing.coroutinesTest
+    testImplementation Testing.mockK
 
-    // Instrumented testing
-    androidTestImplementation Testing.junit
-    androidTestImplementation Testing.core
-    androidTestImplementation Testing.rules
-    androidTestImplementation Testing.runner
-    androidTestImplementation Testing.espresso
 }
