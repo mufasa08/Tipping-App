@@ -1,0 +1,14 @@
+root = true
+
+# noinspection EditorConfigKeyCorrectness
+[*.{kt, kts}]
+insert_final_newline = true
+trim_trailing_whitespace = true
+disabled_rules = no-wildcard-imports, indent # Ignore "indent" rule until https://github.com/pinterest/ktlint/issues/764 is resolved
+ij_kotlin_imports_layout = *, java.**, javax.**, kotlin.**, ^ # default IntelliJ IDEA style
+
+# Allow lines containing an identifier between backticks to be longer than the maximum line length.
+ktlint_ignore_back_ticked_identifier = true
+
+[*.md]
+trim_trailing_whitespace = false
