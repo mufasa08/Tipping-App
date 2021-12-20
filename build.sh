@@ -18,10 +18,6 @@
 # Exit on error
 set -e
 
-# Copy mock google-services file
-echo "Using mock google-services.json"
-cp mock-google-services.json app/google-services.json
-
 # Install preview deps
 "${ANDROID_HOME}"/tools/bin/sdkmanager --channel=3 \
   "tools" "platform-tools" "build-tools;31.0.0" "platforms;android-31"
