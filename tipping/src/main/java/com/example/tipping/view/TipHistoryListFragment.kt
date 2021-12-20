@@ -13,7 +13,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.presentation.fragment.autoCleared
 import com.example.tipping.R
 import com.example.tipping.databinding.DialogReceiptPaymentDetailsBinding
@@ -25,9 +27,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.databinding.BindableItem
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TipHistoryListFragment : Fragment() {
 
@@ -94,20 +95,15 @@ class TipHistoryListFragment : Fragment() {
         override fun bind(binding: TipsHistoryListItemBinding, position: Int) {
             itemViewModel.tipHistory = tipHistory
             binding.viewModel = itemViewModel
+            val cornerRadius =
+                context.resources.getDimension(R.dimen.photo_round_corner_radius).toInt()
 
             Glide
                 .with(context)
                 .load(tipHistory.receiptImageUriPath)
-                .apply(
-                    RequestOptions.bitmapTransform(
-                        RoundedCornersTransformation(
-                            12,
-                            0,
-                            RoundedCornersTransformation.CornerType.ALL
-                        )
-                    )
+                .transform(
+                    MultiTransformation(CenterCrop(), RoundedCorners(cornerRadius))
                 )
-                .centerCrop()
                 .placeholder(R.drawable.ic_nopic)
                 .into(binding.receiptPhoto)
         }
@@ -147,10 +143,15 @@ class TipHistoryListFragment : Fragment() {
                 false
             )
             binding.lifecycleOwner = lifecycleOwner
+
+            val cornerRadius =
+                context.resources.getDimension(R.dimen.photo_round_corner_radius).toInt()
             Glide
                 .with(context)
                 .load(tipHistory.receiptImageUriPath)
-                .centerCrop()
+                .transform(
+                    MultiTransformation(CenterCrop(), RoundedCorners(cornerRadius))
+                )
                 .placeholder(R.drawable.ic_nopic)
                 .into(binding.receiptPhoto)
 
