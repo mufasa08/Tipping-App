@@ -115,14 +115,18 @@ class TipJarViewModelImpl(
 
     @VisibleForTesting
     fun savePaymentToDB(imagePath: String?) {
-        val paymentAmount = paymentAmount.value
-        if (paymentAmount != null) {
-            val tipAmount = totalTip.value?.toDouble() ?: 0.00
+        val paymentAmt = paymentAmount.value
+        val tipAmount = totalTip.value?.toDouble() ?: 0.00
+        totalTip.value = ""
+        paymentAmount.value = ""
+        totalTip.value = ""
+        totalTipPerPerson.value = ""
+        if (paymentAmt != null) {
             viewModelScope.launch {
                 try {
                     tipHistoryRepository.addTipHistory(
                         paymentDate = Date(),
-                        payment = paymentAmount.toDouble(),
+                        payment = paymentAmt.toDouble(),
                         tipAmount = tipAmount,
                         receiptImageUriPath = imagePath
                     )
