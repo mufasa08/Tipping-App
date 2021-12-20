@@ -1,0 +1,73 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
+android {
+    compileSdkVersion Versions.compileSdk
+
+    defaultConfig {
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+    }
+
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+
+}
+
+dependencies {
+    implementation project(":common:cache")
+    implementation project(":model")
+    implementation project(":common:presentation")
+    implementation project(":data")
+
+    // Kotlin lang
+    implementation AndroidX.coreKtx
+    implementation Kotlin.stdlibJdk7
+    implementation Kotlin.coroutines
+
+    // App compat and UI things
+    implementation AndroidX.appCompat
+    implementation AndroidX.lifecycleLiveData
+    implementation AndroidX.lifeCycleRuntime
+    implementation AndroidX.lifecycleViewModel
+    implementation AndroidX.constraintLayout
+    implementation AndroidX.materialComponents
+
+    // Navigation library
+    implementation AndroidX.navigationFragment
+    implementation AndroidX.navigationUI
+
+    // DI
+    implementation DI.koinAndroid
+
+    //Util
+    implementation(Utils.threeTenAbp)
+
+    // Glide
+    implementation UI.glide
+    kapt UI.glideCompiler
+    implementation UI.glideTransformations
+
+    // UI
+    implementation UI.groupie
+    implementation UI.groupieDataBinding
+    implementation UI.fresco
+
+    // Logging
+    implementation Utils.timber
+
+    // Unit testing
+    testImplementation Testing.junit
+    testImplementation Testing.rules
+    testImplementation Testing.runner
+    testImplementation Testing.espresso
+    testImplementation Testing.roboelectric
+    testImplementation Testing.lifecycleTesting
+    testImplementation Testing.coroutinesTest
+    testImplementation Testing.mockK
+
+}

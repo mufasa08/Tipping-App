@@ -1,8 +1,10 @@
 include(
         ":app",
         ":common:presentation",
-        ":common:network",
         ":common:cache",
-        ":tipjar"
+        ":model",
+        ":data",
+        ":data:db",
+        ':tipping'
 )
 rootProject.name = "TipJar"

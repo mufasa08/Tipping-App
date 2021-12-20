@@ -1,8 +1,17 @@
 apply from: "$rootDir/common-android-library.gradle"
 apply plugin: 'kotlin-kapt'
 
+android {
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
 dependencies {
-    kapt Libraries.lifecycleCompiler
-    testImplementation TestLibraries.lifecycleTesting
-    testImplementation TestLibraries.junit
+    kapt AndroidX.lifecycleCompiler
+    implementation AndroidX.constraintLayout
+    implementation AndroidX.coreKtx
+    implementation AndroidX.materialComponents
+    implementation(AndroidX.lifecycleCommon)
+    implementation UI.fresco
 }

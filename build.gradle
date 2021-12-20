@@ -1,26 +1,42 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.31"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.1.2"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "com.android.tools.build:gradle:${Versions.gradle}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+        classpath AndroidX.navigationSafeArgsPlugin
     }
 }
 
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC16"
+    id "com.github.ben-manes.versions" version "0.39.0"
+    id "org.jlleitschuh.gradle.ktlint" version "10.1.0"
+}
+
 allprojects {
+    apply from: "$rootDir/detekt.gradle"
     repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://jitpack.io' }
         google()
+        mavenCentral()
         jcenter()
+    }
+}
+
+subprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << '-Xmaxerrs' << '500'
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task x(type: GradleBuild) { tasks = ["detekt", "lintDebug", "testDebugUnitTest"] }

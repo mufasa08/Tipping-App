@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.tipping.viewmodel.TipJarViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/topContainer"
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tipjar_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/paymentsHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:src="@drawable/ic_history"
+                app:onClick="@{() -> viewModel.historyButtonClicked()}"
+                app:layout_constraintBottom_toBottomOf="@id/logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/logo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/bottomContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topContainer">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/enterAmountTitle"
+                    style="@style/MediumTextStyle.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/enter_amount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/amountContainer"
+                    android:layout_width="0dp"
+                    android:layout_height="82dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_edit_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/enterAmountTitle">
+
+                    <TextView
+                        android:id="@+id/currencyText"
+                        style="@style/LargeTextStyle.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="21dp"
+                        android:text="$"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="HardcodedText" />
+
+                    <EditText
+                        android:id="@+id/payment"
+                        style="@style/LargeTextStyle.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:digits="0123456789."
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:minWidth="100dp"
+                        android:paddingHorizontal="8dp"
+                        android:textAlignment="center"
+                        android:textSize="42sp"
+                        android:hint="@string/payment_amount_hint"
+                        android:text="@={viewModel.paymentAmount}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.421"
+                        app:layout_constraintStart_toEndOf="@id/currencyText"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_default="wrap" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/numberOfPeopleTitle"
+                    style="@style/MediumTextStyle.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/how_many_people"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/amountContainer" />
+
+                <ImageButton
+                    android:id="@+id/incrementPeople"
+                    android:layout_width="71dp"
+                    android:layout_height="71dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="16dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_plus_button_round"
+                    app:onClick="@{() -> viewModel.incrementPeople()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/numberOfPeopleTitle" />
+
+                <TextView
+                    android:id="@+id/peopleCount"
+                    style="@style/LargeTextStyle.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="42sp"
+                    android:text="@{Integer.toString(viewModel.peopleCount)}"
+                    app:layout_constraintBottom_toBottomOf="@id/incrementPeople"
+                    app:layout_constraintEnd_toStartOf="@id/decrementPeople"
+                    app:layout_constraintStart_toEndOf="@id/incrementPeople"
+                    app:layout_constraintTop_toTopOf="@id/incrementPeople"
+                    tools:text="0" />
+
+                <ImageButton
+                    android:id="@+id/decrementPeople"
+                    android:layout_width="71dp"
+                    android:layout_height="71dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="28dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_minus_button_round"
+                    app:onClick="@{() -> viewModel.decrementPeople()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/numberOfPeopleTitle" />
+
+                <TextView
+                    android:id="@+id/tipTitle"
+                    style="@style/MediumTextStyle.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/percent_tip"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/incrementPeople" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/tipContainer"
+                    android:layout_width="0dp"
+                    android:layout_height="82dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_edit_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tipTitle">
+
+                    <TextView
+                        android:id="@+id/tipPercentText"
+                        style="@style/LargeTextStyle.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="11dp"
+                        android:text="%"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="HardcodedText" />
+
+                    <EditText
+                        android:id="@+id/tipPercent"
+                        style="@style/LargeTextStyle.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:digits="0123456789"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:minWidth="100dp"
+                        android:paddingHorizontal="8dp"
+                        android:textAlignment="center"
+                        android:textSize="42sp"
+                        android:hint="@string/tip_percent_hint"
+                        android:text="@={viewModel.tipPercentage}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tipPercentText"
+                        app:layout_constraintHorizontal_bias="0.565"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_default="wrap" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/totalTipTitle"
+                    style="@style/MediumTextStyle.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/total_tip"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tipContainer" />
+
+                <TextView
+                    android:id="@+id/totalTipAmount"
+                    style="@style/MediumTextStyle.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="@{viewModel.totalTip}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tipContainer" />
+
+                <TextView
+                    android:id="@+id/perPersonTitle"
+                    style="@style/MediumTextStyle.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/per_person"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/totalTipTitle" />
+
+                <TextView
+                    android:id="@+id/perPersonAmount"
+                    style="@style/LargeTextStyle.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="24dp"
+                    android:textSize="24sp"
+                    android:text="@{viewModel.totalTipPerPerson}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/totalTipAmount" />
+
+                <CheckBox
+                    android:id="@+id/receiptPhotoCheckbox"
+                    style="@style/Checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="82dp"
+                    android:text="@string/take_photo_of_receipt"
+                    android:checked="@={viewModel.receiptPhotoIsChecked}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/perPersonTitle" />
+
+                <Button
+                    android:id="@+id/savePayment"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="24dp"
+                    android:backgroundTint="@color/button_color"
+                    android:enabled="@{viewModel.savePaymentButtonEnabled}"
+                    android:minHeight="48dp"
+                    android:text="@string/save_payment"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:onClick="@{() -> viewModel.savePaymentClicked()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/receiptPhotoCheckbox"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/bottomContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+        </FrameLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mainFragmentContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
