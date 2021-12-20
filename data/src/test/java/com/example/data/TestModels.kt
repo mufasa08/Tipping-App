@@ -28,3 +28,11 @@ val tipHistoryItem = TipHistory(
     tipAmount = 2.00,
     receiptImageUriPath = null
 )
+
+val tipHistoryItemTwo = TipHistory(
+    id = 2,
+    paymentDate = now,
+    payment = 10.00,
+    tipAmount = 2.00,
+    receiptImageUriPath = null
+)

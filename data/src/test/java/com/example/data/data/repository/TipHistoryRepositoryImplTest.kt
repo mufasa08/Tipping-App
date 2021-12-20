@@ -8,6 +8,7 @@ import com.example.data.daoHistoryItemTwo
 import com.example.data.db.dao.TipHistoryDao
 import com.example.data.repository.TipHistoryRepositoryImpl
 import com.example.data.tipHistoryItem
+import com.example.data.tipHistoryItemTwo
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -63,6 +64,6 @@ class TipHistoryRepositoryImplTest {
         // then
         coVerify { tipHistoryDao.getAll() }
         assertThat(list).hasSize(2)
-        assertThat(list).isEqualTo(listOf(tipHistoryItem, tipHistoryItem))
+        assertThat(list).isEqualTo(listOf(tipHistoryItem, tipHistoryItemTwo))
     }
 }

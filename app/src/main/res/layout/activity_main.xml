@@ -22,5 +22,5 @@
     android:layout_height="match_parent"
     android:keepScreenOn="true"
     app:defaultNavHost="true"
-    app:navGraph="@navigation/nav_graph"
+    app:navGraph="@navigation/tipjar_nav"
     tools:context="com.example.tipjar.MainActivity" />
